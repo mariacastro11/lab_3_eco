@@ -7,6 +7,7 @@ export const errorsMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
+  console.error("SERVER ERROR:", error);
   const boomError = Boom.isBoom(error) ? error : Boom.boomify(error);
   const payload = {
     ...boomError.output.payload,
