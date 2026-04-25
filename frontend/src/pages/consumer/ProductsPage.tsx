@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { getProductsByStore } from "../../services/product.service";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CategoryIcon from "@mui/icons-material/Category";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 
 interface Product {
   id: string;
@@ -80,19 +85,24 @@ export const ProductsPage = () => {
           className="px-4 py-2 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-lg transition-colors mb-4 flex items-center gap-2"
           onClick={() => navigate(-1)}
         >
-          ← Back
+          <ArrowBackIcon fontSize="small" />
+          Back
         </button>
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">🛍️ Products</h1>
-          <Link to="/consumer/cart" className="px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold rounded-lg transition-colors">
-            🛒 Go to cart
+          <h1 className="text-3xl font-bold flex items-center gap-2">
+            <CategoryIcon fontSize="large" className="text-emerald-600" />
+            Products
+          </h1>
+          <Link to="/consumer/cart" className="flex items-center gap-2 px-4 py-2 border border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white font-semibold rounded-lg transition-colors">
+            <ShoppingCartIcon fontSize="small" />
+            Go to cart
           </Link>
         </div>
 
         {products.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="p-6 flex flex-col items-center justify-center py-16">
-              <span className="text-6xl mb-4">🏪</span>
+            <div className="p-6 flex flex-col items-center justify-center py-16 text-gray-300">
+              <ProductionQuantityLimitsIcon style={{ fontSize: 80 }} className="mb-4 text-emerald-200" />
               <p className="text-lg text-gray-500">
                 No products available
               </p>
@@ -104,14 +114,15 @@ export const ProductsPage = () => {
               <div key={product.id} className="bg-white rounded-2xl shadow-xl overflow-hidden">
                 <div className="p-6">
                   <h3 className="text-xl font-bold">{product.name}</h3>
-                  <p className="text-blue-600 font-bold text-xl">
+                  <p className="text-emerald-600 font-bold text-xl">
                     ${product.price.toFixed(2)}
                   </p>
                   <div className="mt-2">
                     <button
-                      className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors mt-2"
+                      className="w-full py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg transition-colors mt-2 flex items-center justify-center gap-2"
                       onClick={() => addToCart(product)}
                     >
+                      <AddShoppingCartIcon fontSize="small" />
                       Add to cart
                     </button>
                   </div>

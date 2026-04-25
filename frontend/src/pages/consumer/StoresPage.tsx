@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getStores } from "../../services/store.service";
-import { logout } from "../../services/auth.service";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 
 interface Store {
   id: string;
@@ -10,7 +10,6 @@ interface Store {
 }
 
 export const StoresPage = () => {
-  const navigate = useNavigate();
   const [stores, setStores] = useState<Store[]>([]);
 
   useEffect(() => {
@@ -26,36 +25,20 @@ export const StoresPage = () => {
     fetchStores();
   }, []);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">🏪 Stores</h1>
-          <div className="flex gap-3">
-            <Link to="/consumer/cart" className="px-4 py-2 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold rounded-lg transition-colors">
-              🛒 Cart
-            </Link>
-            <Link to="/consumer/my-orders" className="px-4 py-2 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-lg transition-colors">
-              📦 My Orders
-            </Link>
-            <button
-              className="px-4 py-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold rounded-lg transition-colors"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </div>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold flex items-center gap-2">
+            <StorefrontIcon fontSize="large" className="text-teal-600" />
+            Stores
+          </h1>
         </div>
 
         {stores.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="p-6 flex flex-col items-center justify-center py-16">
-              <span className="text-6xl mb-4">🏪</span>
+            <div className="p-6 flex flex-col items-center justify-center py-16 text-gray-300">
+              <StorefrontIcon style={{ fontSize: 80 }} className="mb-4 text-teal-200" />
               <p className="text-lg text-gray-500">
                 No stores available
               </p>
@@ -77,7 +60,7 @@ export const StoresPage = () => {
                   <div className="mt-4">
                     <Link
                       to={`/consumer/stores/${store.id}/products`}
-                      className={`block text-center w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors mt-4 ${!store.is_open ? "opacity-50 cursor-not-allowed pointer-events-none" : ""}`}
+                      className={`block text-center w-full py-2 px-4 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition-colors mt-4 ${!store.is_open ? "opacity-50 cursor-not-allowed pointer-events-none" : ""}`}
                     >
                       View products
                     </Link>

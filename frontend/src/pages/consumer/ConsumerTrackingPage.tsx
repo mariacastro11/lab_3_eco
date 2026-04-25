@@ -5,6 +5,14 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { supabase } from "../../services/supabase";
 import { getDeliveryLocation, getStoreLocation, getOrderDetails } from "../../services/order.service";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import MapIcon from "@mui/icons-material/Map";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import HomeIcon from "@mui/icons-material/Home";
 
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
@@ -149,7 +157,7 @@ export const ConsumerTrackingPage = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <span className="inline-block w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></span>
+        <span className="inline-block w-12 h-12 border-4 border-cyan-600 border-t-transparent rounded-full animate-spin"></span>
       </div>
     );
   }
@@ -160,8 +168,9 @@ export const ConsumerTrackingPage = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md">
           <h2 className="text-xl font-bold text-red-600 mb-4">Error</h2>
           <p className="text-gray-600 mb-6">{error}</p>
-          <Link to="/consumer/my-orders" className="py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-colors inline-block">
-            ← Back to orders
+          <Link to="/consumer/my-orders" className="py-2 px-4 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-lg shadow-md transition-colors flex items-center gap-2 max-w-fit">
+            <ArrowBackIcon fontSize="small" />
+            Back to orders
           </Link>
         </div>
       </div>
@@ -174,11 +183,15 @@ export const ConsumerTrackingPage = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <div className="bg-white shadow-md px-6 py-4 flex items-center justify-between z-[1000] relative">
         <div className="flex items-center gap-4">
-          <Link to="/consumer/my-orders" className="px-3 py-1 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-md transition-colors text-sm">
-            ← Back
+          <Link to="/consumer/my-orders" className="px-3 py-1 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-md transition-colors text-sm flex items-center gap-1">
+            <ArrowBackIcon fontSize="small" />
+            Back
           </Link>
           <div>
-            <h1 className="text-xl font-bold">🗺️ Order Tracking</h1>
+            <h1 className="text-xl font-bold flex items-center gap-2">
+              <MapIcon className="text-cyan-600" />
+              Order Tracking
+            </h1>
             <p className="text-sm text-gray-500">Order: {orderId?.slice(0, 8)}...</p>
           </div>
         </div>
@@ -186,15 +199,15 @@ export const ConsumerTrackingPage = () => {
         <div>
           {delivered ? (
             <div className="px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 flex items-center gap-2 animate-bounce">
-              ✅ Delivered! Your order has arrived!
+              <CheckCircleIcon fontSize="small" /> Delivered! Your order has arrived!
             </div>
           ) : deliveryPos ? (
-            <div className="px-3 py-1 text-sm font-semibold rounded-full bg-blue-100 text-blue-800 flex items-center gap-2">
-              🚴 Driver is on the way
+            <div className="px-3 py-1 text-sm font-semibold rounded-full bg-cyan-100 text-cyan-800 flex items-center gap-2">
+              <DirectionsBikeIcon fontSize="small" /> Driver is on the way
             </div>
           ) : (
             <div className="px-3 py-1 text-sm font-semibold rounded-full bg-yellow-100 text-yellow-800 flex items-center gap-2">
-              ⏳ Waiting for driver location...
+              <HourglassEmptyIcon fontSize="small" /> Waiting for driver location...
             </div>
           )}
         </div>
@@ -204,7 +217,7 @@ export const ConsumerTrackingPage = () => {
         <div className="bg-green-100 border-b border-green-200 px-6 py-4 z-[1000] relative">
           <div className="max-w-3xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-4xl animate-bounce">🎉</span>
+              <CelebrationIcon fontSize="large" className="animate-bounce text-green-600" />
               <div>
                 <p className="font-bold text-lg text-green-700">
                   Your order has arrived!
@@ -224,7 +237,7 @@ export const ConsumerTrackingPage = () => {
       {showToast && (
         <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999]">
           <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-md shadow-lg flex items-center gap-3 text-green-800">
-            <span className="text-lg">🎉</span>
+            <CelebrationIcon fontSize="medium" className="text-green-600" />
             <span className="font-semibold">¡Tu pedido ha llegado!</span>
           </div>
         </div>
@@ -247,8 +260,8 @@ export const ConsumerTrackingPage = () => {
           {deliveryPos && (
             <Marker position={[deliveryPos.lat, deliveryPos.lng]} icon={deliveryIcon}>
               <Popup>
-                <div className="text-center">
-                  <strong>🚴 Driver</strong>
+                <div className="text-center flex flex-col items-center gap-1">
+                  <strong className="flex items-center gap-1 text-cyan-700"><DirectionsBikeIcon fontSize="small" /> Driver</strong>
                 </div>
               </Popup>
             </Marker>
@@ -257,8 +270,8 @@ export const ConsumerTrackingPage = () => {
           {storePos && (
             <Marker position={[storePos.lat, storePos.lng]} icon={storeIcon}>
               <Popup>
-                <div className="text-center">
-                  <strong>🏪 {storePos.name}</strong>
+                <div className="text-center flex flex-col items-center gap-1">
+                  <strong className="flex items-center gap-1 text-red-700"><StorefrontIcon fontSize="small" /> {storePos.name}</strong>
                   <br />
                   <span className="text-xs text-gray-500">Store location</span>
                 </div>
@@ -269,8 +282,8 @@ export const ConsumerTrackingPage = () => {
           {destPos && (
             <Marker position={[destPos.lat, destPos.lng]} icon={destinationIcon}>
               <Popup>
-                <div className="text-center">
-                  <strong>🏠 Your Location</strong>
+                <div className="text-center flex flex-col items-center gap-1">
+                  <strong className="flex items-center gap-1 text-green-700"><HomeIcon fontSize="small" /> Your Location</strong>
                   <br />
                   <span className="text-xs text-gray-500">Delivery destination</span>
                 </div>

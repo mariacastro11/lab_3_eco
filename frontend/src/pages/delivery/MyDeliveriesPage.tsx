@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getMyDeliveries } from "../../services/order.service";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import MopedIcon from "@mui/icons-material/Moped";
+import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import MapIcon from "@mui/icons-material/Map";
 
 interface Order {
   id: string;
@@ -50,14 +54,18 @@ export const MyDeliveriesPage = () => {
           className="px-4 py-2 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-lg transition-colors mb-4 flex items-center gap-2"
           onClick={() => navigate("/delivery/available-orders")}
         >
-          ← Back
+          <ArrowBackIcon fontSize="small" />
+          Back
         </button>
-        <h1 className="text-3xl font-bold mb-8">📦 My Deliveries</h1>
+        <h1 className="text-3xl font-bold mb-8 flex items-center gap-2">
+          <MopedIcon fontSize="large" className="text-sky-600" />
+          My Deliveries
+        </h1>
 
         {orders.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="p-6 flex flex-col items-center justify-center py-16">
-              <span className="text-6xl mb-4">🚴</span>
+            <div className="p-6 flex flex-col items-center justify-center py-16 text-gray-300">
+              <DirectionsBikeIcon style={{ fontSize: 80 }} className="mb-4 text-sky-200" />
               <p className="text-lg text-gray-500">No deliveries yet</p>
             </div>
           </div>
@@ -102,9 +110,9 @@ export const MyDeliveriesPage = () => {
                     <div className="mt-4">
                       <Link
                         to={`/delivery/tracking/${order.id}`}
-                        className="block text-center w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-colors"
+                        className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-lg shadow-md transition-colors"
                       >
-                        🗺️ Track Order
+                        <MapIcon fontSize="small" /> Track Order
                       </Link>
                     </div>
                   )}

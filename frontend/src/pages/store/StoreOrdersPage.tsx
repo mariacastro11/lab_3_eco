@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStoreOrders } from "../../services/order.service";
 import { supabase } from "../../services/supabase";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import InboxIcon from "@mui/icons-material/Inbox";
 
 interface Order {
   id: string;
@@ -53,14 +56,18 @@ export const StoreOrdersPage = () => {
           className="px-4 py-2 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-lg transition-colors mb-4 flex items-center gap-2"
           onClick={() => navigate("/store/my-store")}
         >
-          ← Back
+          <ArrowBackIcon fontSize="small" />
+          Back
         </button>
-        <h1 className="text-3xl font-bold mb-8">📋 Store Orders</h1>
+        <h1 className="text-3xl font-bold mb-8 flex items-center gap-2">
+          <FormatListBulletedIcon fontSize="large" className="text-violet-600" />
+          Store Orders
+        </h1>
 
         {orders.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="p-6 flex flex-col items-center justify-center py-16">
-              <span className="text-6xl mb-4">📭</span>
+            <div className="p-6 flex flex-col items-center justify-center py-16 text-gray-300">
+              <InboxIcon style={{ fontSize: 80 }} className="mb-4 text-violet-200" />
               <p className="text-lg text-gray-500">No orders yet</p>
             </div>
           </div>

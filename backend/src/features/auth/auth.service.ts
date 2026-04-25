@@ -29,9 +29,7 @@ export const createUserService = async (
     throw Boom.badRequest("storeName is required for store users");
   }
 
-  if (user.role === UserRole.CONSUMER && user.email.endsWith("@gmail.com")) {
-    throw Boom.badRequest("Users with @gmail.com emails cannot register as consumer");
-  }
+ 
 
   const signUpResponse = await supabase.auth.signUp({
     email: user.email,

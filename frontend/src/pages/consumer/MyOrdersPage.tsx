@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getMyOrders } from "../../services/order.service";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import InboxIcon from "@mui/icons-material/Inbox";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
 
 interface Order {
   id: string;
@@ -35,14 +39,18 @@ export const MyOrdersPage = () => {
           className="px-4 py-2 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-lg transition-colors mb-4 flex items-center gap-2"
           onClick={() => navigate(-1)}
         >
-          ← Back
+          <ArrowBackIcon fontSize="small" />
+          Back
         </button>
-        <h1 className="text-3xl font-bold mb-8">📦 My Orders</h1>
+        <h1 className="text-3xl font-bold mb-8 flex items-center gap-2">
+          <ReceiptLongIcon fontSize="large" className="text-amber-600" />
+          My Orders
+        </h1>
 
         {orders.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="p-6 flex flex-col items-center justify-center py-16">
-              <span className="text-6xl mb-4">📭</span>
+            <div className="p-6 flex flex-col items-center justify-center py-16 text-gray-300">
+              <InboxIcon style={{ fontSize: 80 }} className="mb-4 text-amber-200" />
               <p className="text-lg text-gray-500">No orders yet</p>
             </div>
           </div>
@@ -91,9 +99,10 @@ export const MyOrdersPage = () => {
                     <div className="mt-4 flex justify-end">
                       <Link
                         to={`/consumer/tracking/${order.id}`}
-                        className="py-1 px-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-md shadow-sm transition-colors"
+                        className="py-1 px-3 bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold rounded-md shadow-sm transition-colors flex items-center gap-1"
                       >
-                        📍 Track Order
+                        <MyLocationIcon fontSize="small" />
+                        Track Order
                       </Link>
                     </div>
                   )}

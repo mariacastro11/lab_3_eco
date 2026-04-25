@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   acceptOrder,
   getAvailableOrders,
   rejectOrder,
 } from "../../services/order.service";
-import { logout } from "../../services/auth.service";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface Order {
   id: string;
@@ -69,32 +72,20 @@ export const AvailableOrdersPage = () => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-2xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Available Orders</h1>
-          <div className="flex gap-3">
-            <Link to="/delivery/my-deliveries" className="px-4 py-2 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-lg transition-colors">
-              My Deliveries
-            </Link>
-            <button
-              className="px-4 py-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold rounded-lg transition-colors"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </div>
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold flex items-center gap-2">
+            <ListAltIcon fontSize="large" className="text-lime-600" />
+            Available Orders
+          </h1>
         </div>
 
         {orders.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="p-6 flex flex-col items-center justify-center py-16">
+            <div className="p-6 flex flex-col items-center justify-center py-16 text-gray-300">
+              <DeliveryDiningIcon style={{ fontSize: 80 }} className="mb-4 text-lime-200" />
               <p className="text-lg text-gray-500">
                 No available orders
               </p>
@@ -139,25 +130,31 @@ export const AvailableOrdersPage = () => {
 
                   <div className="flex gap-2">
                     <button
-                      className="flex-1 py-2 px-4 bg-teal-500 hover:bg-teal-600 text-white font-semibold rounded-lg shadow-md transition-colors disabled:opacity-50"
+                      className="flex-1 py-2 px-4 bg-lime-600 hover:bg-lime-700 text-white font-semibold rounded-lg shadow-md transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                       onClick={() => handleAcceptOrder(order.id)}
                       disabled={loadingAction.id === order.id}
                     >
-                      {loadingAction.id === order.id &&
-                      loadingAction.type === "accept"
-                        ? "Loading..."
-                        : "Accept order"}
+                      {loadingAction.id === order.id && loadingAction.type === "accept" ? (
+                        "Loading..."
+                      ) : (
+                        <>
+                          <CheckIcon fontSize="small" /> Accept order
+                        </>
+                      )}
                     </button>
 
                     <button
-                      className="flex-1 py-2 px-4 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold rounded-lg transition-colors disabled:opacity-50"
+                      className="flex-1 py-2 px-4 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-semibold rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                       onClick={() => handleRejectOrder(order.id)}
                       disabled={loadingAction.id === order.id}
                     >
-                      {loadingAction.id === order.id &&
-                      loadingAction.type === "reject"
-                        ? "Loading..."
-                        : "Reject order"}
+                      {loadingAction.id === order.id && loadingAction.type === "reject" ? (
+                        "Loading..."
+                      ) : (
+                        <>
+                          <CloseIcon fontSize="small" /> Reject order
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>

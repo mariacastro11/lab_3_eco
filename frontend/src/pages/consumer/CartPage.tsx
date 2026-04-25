@@ -4,6 +4,10 @@ import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { createOrder } from "../../services/order.service";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
@@ -129,19 +133,24 @@ export const CartPage = () => {
           className="px-4 py-2 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-lg transition-colors mb-4 flex items-center gap-2"
           onClick={() => navigate(-1)}
         >
-          ← Back
+          <ArrowBackIcon fontSize="small" />
+          Back
         </button>
-        <h1 className="text-3xl font-bold mb-8">🛒 Cart</h1>
+        <h1 className="text-3xl font-bold mb-8 flex items-center gap-2">
+          <ShoppingCartCheckoutIcon fontSize="large" className="text-rose-600" />
+          Cart
+        </h1>
 
         {cart.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="p-6 flex flex-col items-center justify-center py-16">
-              <span className="text-6xl mb-4">🛒</span>
+            <div className="p-6 flex flex-col items-center justify-center py-16 text-gray-300">
+              <RemoveShoppingCartIcon style={{ fontSize: 80 }} className="mb-4 text-rose-200" />
               <p className="text-lg text-gray-500">Your cart is empty</p>
               <button
-                className="mt-4 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+                className="mt-4 py-2 px-4 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
                 onClick={() => navigate("/consumer/stores")}
               >
+                <ShoppingCartIcon fontSize="small" />
                 Browse stores
               </button>
             </div>
@@ -181,7 +190,7 @@ export const CartPage = () => {
                       </button>
                     </div>
 
-                    <p className="font-bold text-blue-600 text-lg">
+                    <p className="font-bold text-rose-600 text-lg">
                       ${(item.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
@@ -193,7 +202,7 @@ export const CartPage = () => {
               <div className="p-6">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-xl font-semibold">Total</span>
-                  <span className="text-2xl font-bold text-blue-600">
+                  <span className="text-2xl font-bold text-rose-600">
                     ${total.toFixed(2)}
                   </span>
                 </div>
@@ -219,7 +228,7 @@ export const CartPage = () => {
                 </div>
 
                 <button
-                  className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-2 px-4 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   onClick={handleCreateOrder}
                   disabled={loading}
                 >

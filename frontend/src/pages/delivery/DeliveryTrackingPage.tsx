@@ -10,6 +10,13 @@ import {
   getOrderDetails,
   getDeliveryLocation,
 } from "../../services/order.service";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import MapIcon from "@mui/icons-material/Map";
+import StraightenIcon from "@mui/icons-material/Straighten";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
@@ -218,7 +225,7 @@ export const DeliveryTrackingPage = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <span className="inline-block w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></span>
+        <span className="inline-block w-12 h-12 border-4 border-yellow-600 border-t-transparent rounded-full animate-spin"></span>
       </div>
     );
   }
@@ -229,8 +236,9 @@ export const DeliveryTrackingPage = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md">
           <h2 className="text-xl font-bold text-red-600 mb-4">Error</h2>
           <p className="text-gray-600 mb-6">{error}</p>
-          <Link to="/delivery/my-deliveries" className="py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-colors inline-block">
-            ← Back to deliveries
+          <Link to="/delivery/my-deliveries" className="py-2 px-4 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-lg shadow-md transition-colors flex items-center gap-2 max-w-fit">
+            <ArrowBackIcon fontSize="small" />
+            Back to deliveries
           </Link>
         </div>
       </div>
@@ -243,13 +251,15 @@ export const DeliveryTrackingPage = () => {
         <div className="flex items-center gap-4">
           <Link
             to="/delivery/my-deliveries"
-            className="px-3 py-1 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-md transition-colors text-sm"
+            className="px-3 py-1 border border-gray-600 text-gray-700 hover:bg-gray-600 hover:text-white font-semibold rounded-md transition-colors text-sm flex items-center gap-1"
           >
-            ← Back
+            <ArrowBackIcon fontSize="small" />
+            Back
           </Link>
           <div>
-            <h1 className="text-xl font-bold">
-              🗺️ Delivery Tracking
+            <h1 className="text-xl font-bold flex items-center gap-2">
+              <MapIcon className="text-yellow-600" />
+              Delivery Tracking
             </h1>
             <p className="text-sm text-gray-500">
               Order: {orderId?.slice(0, 8)}...
@@ -259,24 +269,24 @@ export const DeliveryTrackingPage = () => {
 
         <div className="flex items-center gap-4">
           {distance !== null && (
-            <div className="px-3 py-1 text-sm font-semibold rounded-full border border-gray-600 text-gray-700 flex items-center gap-2">
-              📏 {distance < 1000 ? `${distance.toFixed(1)} m` : `${(distance / 1000).toFixed(2)} km`}
+            <div className="px-3 py-1 text-sm font-semibold rounded-full border border-gray-600 text-gray-700 flex items-center gap-1">
+              <StraightenIcon fontSize="small" /> {distance < 1000 ? `${distance.toFixed(1)} m` : `${(distance / 1000).toFixed(2)} km`}
             </div>
           )}
           {delivered ? (
-            <div className="px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 flex items-center gap-2">
-              ✅ Delivered
+            <div className="px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800 flex items-center gap-1">
+              <CheckCircleIcon fontSize="small" /> Delivered
             </div>
           ) : (
-            <div className="px-3 py-1 text-sm font-semibold rounded-full bg-yellow-100 text-yellow-800 flex items-center gap-2">
-              🚴 En route
+            <div className="px-3 py-1 text-sm font-semibold rounded-full bg-yellow-100 text-yellow-800 flex items-center gap-1">
+              <DirectionsBikeIcon fontSize="small" /> En route
             </div>
           )}
         </div>
       </div>
 
       {!delivered && (
-        <div className="bg-gradient-to-r from-blue-100 to-purple-100 border-b border-gray-300 px-6 py-3 z-[1000] relative">
+        <div className="bg-gradient-to-r from-yellow-100 to-amber-100 border-b border-gray-300 px-6 py-3 z-[1000] relative">
           <div className="max-w-3xl mx-auto flex items-center gap-6 text-sm">
             <span className="font-semibold text-gray-800">
               Use arrow keys to move:
@@ -298,7 +308,7 @@ export const DeliveryTrackingPage = () => {
         <div className="bg-green-100 border-b border-green-200 px-6 py-4 z-[1000] relative">
           <div className="max-w-3xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-4xl">🎉</span>
+              <CelebrationIcon fontSize="large" className="text-green-600 animate-bounce" />
               <div>
                 <p className="font-bold text-lg text-green-700">
                   Order delivered successfully!
@@ -338,8 +348,8 @@ export const DeliveryTrackingPage = () => {
               icon={deliveryIcon}
             >
               <Popup>
-                <div className="text-center">
-                  <strong>🚴 You (Delivery)</strong>
+                <div className="text-center flex flex-col items-center gap-1">
+                  <strong className="flex items-center gap-1 text-yellow-700"><DirectionsBikeIcon fontSize="small" /> You (Delivery)</strong>
                   <br />
                   <span className="text-xs text-gray-500">
                     {deliveryPos.lat.toFixed(6)}, {deliveryPos.lng.toFixed(6)}
@@ -353,8 +363,8 @@ export const DeliveryTrackingPage = () => {
               icon={destinationIcon}
             >
               <Popup>
-                <div className="text-center">
-                  <strong>📍 Destino de entrega</strong>
+                <div className="text-center flex flex-col items-center gap-1">
+                  <strong className="flex items-center gap-1 text-green-700"><LocationOnIcon fontSize="small" /> Destino de entrega</strong>
                   <br />
                   <span className="text-xs text-gray-500">
                     {destinationPos.lat.toFixed(6)}, {destinationPos.lng.toFixed(6)}
