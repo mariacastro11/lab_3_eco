@@ -1,7 +1,9 @@
 import axios from "axios";
 
+console.log("BACKEND URL (HARDCODED): http://127.0.0.1:8080/api");
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND,
+  baseURL: "http://127.0.0.1:8080/api",
 });
 
 api.interceptors.request.use((config) => {

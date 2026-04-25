@@ -19,6 +19,11 @@ app.get("/", (_req, res) => {
   res.send("Rappi Ecosystem");
 });
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`, req.body);
+  next();
+});
+
 app.use("/api/auth", authRouter);
 app.use("/api/stores", storeRouter);
 app.use("/api/products", productRouter);
@@ -26,10 +31,11 @@ app.use("/api/orders", orderRouter);
 
 app.use(errorsMiddleware);
 
-if (NODE_ENV !== "production") {
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
-}
+app.listen(Number(PORT), "0.0.0.0", () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+// Mantener proceso vivo
+setInterval(() => {}, 1000);
 
 export default app;

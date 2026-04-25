@@ -13,6 +13,7 @@ interface CreateOrderDTO {
 }
 
 export const createOrder = async (payload: CreateOrderDTO) => {
+  alert("Sending order to: " + api.defaults.baseURL + "/orders");
   const response = await api.post("/orders", payload);
   return response.data;
 };
