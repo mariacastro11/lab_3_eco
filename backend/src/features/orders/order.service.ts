@@ -88,7 +88,6 @@ export class OrderService {
       .from("orders")
       .select("*, stores(name)")
       .is("delivery_id", null)
-      .eq("status", OrderStatus.PENDING)
       .order("created_at", { ascending: false });
 
     if (rejectedOrderIds.length > 0) {
@@ -111,12 +110,12 @@ export class OrderService {
       .single();
 
     if (!order) throw Boom.notFound("Order not found");
-    if (order.status === OrderStatus.ACCEPTED)
-      throw Boom.badRequest("Order already accepted");
+    if (order.delivery_id)
+      throw Boom.badRequest("Order already accepted by another delivery");
 
     const { data, error } = await supabase
       .from("orders")
-      .update({ delivery_id: deliveryId, status: OrderStatus.ACCEPTED })
+      .update({ delivery_id: deliveryId })
       .eq("id", orderId)
       .select()
       .single();
