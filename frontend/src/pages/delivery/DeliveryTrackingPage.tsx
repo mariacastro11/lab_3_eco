@@ -93,17 +93,24 @@ export const DeliveryTrackingPage = () => {
     const loadData = async () => {
       try {
         const order = await getOrderDetails(orderId);
+        // Usar coordenadas por defecto si no existen en la orden
+        const destLat = order.delivery_latitude || 4.6097;
+        const destLng = order.delivery_longitude || -74.0817;
+
         setDestinationPos({
-          lat: order.delivery_latitude,
-          lng: order.delivery_longitude,
+          lat: destLat,
+          lng: destLng,
         });
 
         try {
           const loc = await getDeliveryLocation(orderId);
-          setDeliveryPos({ lat: loc.latitude, lng: loc.longitude });
+          setDeliveryPos({ 
+            lat: loc.latitude || (destLat + 0.005), 
+            lng: loc.longitude || (destLng + 0.005) 
+          });
         } catch {
-          const startLat = order.delivery_latitude + 0.005;
-          const startLng = order.delivery_longitude + 0.005;
+          const startLat = destLat + 0.005;
+          const startLng = destLng + 0.005;
           setDeliveryPos({ lat: startLat, lng: startLng });
 
           await updateDeliveryLocation(orderId, startLat, startLng);
@@ -329,7 +336,7 @@ export const DeliveryTrackingPage = () => {
       )}
 
       <div className="flex-1 relative" style={{ minHeight: "500px" }}>
-        {deliveryPos && destinationPos && (
+        {deliveryPos?.lat != null && destinationPos?.lat != null && (
           <MapContainer
             center={[deliveryPos.lat, deliveryPos.lng]}
             zoom={16}
